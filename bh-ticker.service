@@ -1,0 +1,13 @@
+[Unit]
+Description=BH-Ticker Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+User=pi
+ExecStart=/usr/bin/sudo /usr/bin/env java -jar /home/pi/bh-ticker.jar
+
+[Install]
+WantedBy=multi-user.target

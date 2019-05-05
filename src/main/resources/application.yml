@@ -1,0 +1,15 @@
+---
+ticker:
+  tools: '/home/pi/rpi-rgb-led-matrix'
+  settings:
+    brightness: 50
+
+spring:
+  datasource:
+    url: jdbc:hsqldb:file:data/mydb
+    username: SA
+    password: lEtmEIn
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+
+spring.datasource.initialization-mode: always
+spring.jpa.hibernate.ddl-auto: update

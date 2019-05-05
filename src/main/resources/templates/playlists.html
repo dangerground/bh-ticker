@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<body>
+<div th:replace="fragments/navigation.html :: navbar"></div>
+
+<div class="container">
+<h1>Playlists</h1>
+
+<table class="table">
+    <tbody>
+        <tr th:each="playlist : ${playlists}" th:class="${selected == playlist.id} ? 'selected' : ''">
+            <td><a th:href="@{/playlists/view/{id}(id=${playlist.id})}" th:text="${playlist.name}"></a></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <form th:action="@{/playlists/create}" method="POST">
+                    <input type="text" name="name" />
+                    <button class="btn btn-lg btn-primary">Create</button>
+                </form>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

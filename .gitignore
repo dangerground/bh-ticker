@@ -1,0 +1,13 @@
+# IDEA
+*.iml
+.idea/
+out/
+
+# building
+build/
+.gradle
+lombok.config
+
+# software
+data/
+gif/

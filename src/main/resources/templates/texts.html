@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<body>
+<div th:replace="fragments/navigation.html :: navbar"></div>
+
+<div class="container">
+    <h1>Playlists</h1>
+
+    <table class="table">
+        <tbody>
+        <tr th:each="text : ${texts}" th:class="${selected == text.id} ? 'selected' : ''">
+            <td><span th:text="${text.text}" th:style="'font-weight:bold;color: '+ ${@scrollingTextService.toHex(text.textColor)} + ';text-shadow: 1px 1px 2px ' + ${@scrollingTextService.toHex(text.outlineColor)} + ';background-color:' + ${@scrollingTextService.toHex(text.background)}"></span></td>
+            <td title="Play"><a th:href="@{/text/play/{id}(id=${text.id})}"><span class="fa fa-play"></span></a></td>
+            <td title="Delete"><a th:href="@{/text/delete/{id}(id=${text.id})}"><span class="fa fa-trash"></span></a></td>
+        </tr>
+        </tbody>
+        <tfoot style="border-top: 3px solid gray">
+        <tr>
+            <td colspan="3">
+                <h2>Neu:</h2>
+                <form th:action="@{/text/create}" method="POST">
+
+                    <div class="form-group">
+                        <div class="col-4">
+                            <label for="color" class="col-sm-6 col-form-label">Textfarbe</label>
+                            <input title="text-color" type="color" id="color" name="color" value="#ffffff" />
+                        </div>
+
+                        <div class="col-4">
+                            <label for="outline" class="col-sm-6 col-form-label">Umrandung</label>
+                            <input title="text-outline" type="color" id="outline" name="outline" value="#cccccc" />
+                        </div>
+
+                        <div class="col-4">
+                            <label for="background" class="col-sm-6 col-form-label">Hintergrund</label>
+                            <input title="background color" type="color" id="background" name="background" value="#000000" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-4">
+                            <label for="space" class="col-sm-6 col-form-label">Buchstabenabstand</label>
+                            <input title="spacing" class="form-control" type="range" min="1" max="10" id="space" name="spacing" value="2">
+                        </div>
+
+                        <div class="col-4">
+                            <label for="speed" class="col-sm-6 col-form-label">Buchstaben/s</label>
+                            <input title="speed" class="form-control" type="range" min="1" max="10" id="speed" name="speed" value="3">
+                        </div>
+
+                        <label for="font" class="col-sm-2 col-form-label"></label>
+                        <select title="text-font" class="form-control" id="font" name="font" style="display: none;">
+                            <option selected>BebasNeue-Regular</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <input type="text" class="form-control" id="text" name="text" required placeholder="text" />
+                    </div>
+                    <button class="btn btn-lg btn-primary">Create</button>
+                </form>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

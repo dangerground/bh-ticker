@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<body>
+<div th:replace="fragments/navigation.html :: navbar"></div>
+
+<div class="container">
+    <h1 th:text="'Playlist: '+${playlist.name}"># </h1>
+    <a th:href="@{/playlists/play/{id}(id=${playlist.id})}">play</a>
+
+    <form th:action="@{/playlists/add}" method="post">
+        <input type="hidden" name="playlistId" th:value="${playlist.id}" />
+<table class="table">
+    <tbody>
+    <tr th:each="gif : ${playlist.entries}">
+        <td th:text="${gif.name}"></td>
+        <td><img th:src="@{/gif/show/{name}(name=${gif.id})}" height="32" width="192" /></td>
+        <td><a th:href="@{/gif/play/{name}(name=${gif.id})}">Play on ticker</a></td>
+    </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                <select name="gifId">
+                    <option th:each="gif : ${gifs}" th:value="${gif.id}" th:text="${gif.name}"></option>
+                </select>
+            </td>
+            <td><button class="btn btn-lg btn-primary">+</button></td>
+        </tr>
+    </tfoot>
+</table>
+    </form>
+</div>
+<div class="container">
+    <h2>Options</h2>
+    <a th:if="${playlist.shuffle}" th:href="@{/playlists/shufflemode/{id}(id=${playlist.id})}">No Suffle</a>
+    <a th:unless="${playlist.shuffle}" th:href="@{/playlists/shufflemode/{id}(id=${playlist.id})}">Everyday I'm shuffleing</a>
+</div>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

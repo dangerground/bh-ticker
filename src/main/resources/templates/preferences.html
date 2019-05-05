@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<body>
+<div th:replace="fragments/navigation.html :: navbar"></div>
+
+<div class="container">
+    <h1>Einstellungen</h1>
+
+    <form action="#" th:action="@{/preferences/save}" method="post">
+        <div class="form-group">
+            <label for="brightness">Helligkeit</label>
+            <input type="range" name="brightness" id="brightness" min="10" max="100" th:value="${brightness}" class="form-control" />
+            <button class="btn btn-lg btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>
