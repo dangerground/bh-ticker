@@ -1,48 +1,52 @@
-package de.bhclub.ticker.text;
+package de.bhclub.ticker.text
 
-import de.bhclub.ticker.playlists.PlaylistNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.awt.*;
-import java.util.Optional;
+import de.bhclub.ticker.playlists.PlaylistNotFoundException
+import org.springframework.stereotype.Service
+import java.awt.Color
 
 @Service
-public class ScrollingTextService {
-
-    @Autowired
-    private ScrollingTextRepository scrollingTextRepository;
-
-    public void createText(String text, String textColor, String outline, String background, String font, String speed, String spacing) {
-        ScrollingText scrollingText = new ScrollingText();
-        scrollingText.setText(text);
-        scrollingText.setTextColor(Color.decode(textColor));
-        scrollingText.setOutlineColor(Color.decode(outline));
-        scrollingText.setBackground(Color.decode(background));
-        scrollingText.setFont(font);
-        scrollingText.setSpeed(Integer.parseInt(speed));
-        scrollingText.setSpacing(Integer.parseInt(spacing));
-
-        scrollingTextRepository.save(scrollingText);
+class ScrollingTextService(
+    private val scrollingTextRepository: ScrollingTextRepository,
+) {
+    fun createText(
+        text: String,
+        textColor: String,
+        outline: String,
+        background: String,
+        font: String,
+        speed: String,
+        spacing: String
+    ) {
+        val scrollingText = ScrollingText(
+            text = text,
+            textColor = Color.decode(textColor),
+            outlineColor = Color.decode(outline),
+            background = Color.decode(background),
+            font = font,
+            speed = speed.toInt(),
+            spacing = spacing.toInt(),
+        )
+        scrollingTextRepository.save(scrollingText)
     }
 
-    public Iterable<ScrollingText> getAll() {
-        return scrollingTextRepository.findAll();
-    }
+    fun getAll() = scrollingTextRepository.findAll()
 
-    public ScrollingText getText(Long id) {
-        Optional<ScrollingText> text = scrollingTextRepository.findById(id);
-        if (!text.isPresent()) {
-            throw new PlaylistNotFoundException("text not found");
+    fun getText(id: Long): ScrollingText {
+        val text = scrollingTextRepository.findById(id)
+        if (!text.isPresent) {
+            throw PlaylistNotFoundException("text not found")
         }
-        return text.get();
+        return text.get()
     }
 
-    public static String toHex(Color color) {
-        return String.format("#%06X", (0xFFFFFF & color.getRGB()));
+    fun deleteText(id: Long) {
+        scrollingTextRepository.deleteById(id)
     }
 
-    public void deleteText(Long id) {
-        scrollingTextRepository.deleteById(id);
+    companion object {
+        @JvmStatic
+        fun toHex(color: Color): String {
+            return String.format("#%06X", 0xFFFFFF and color.rgb)
+        }
     }
 }

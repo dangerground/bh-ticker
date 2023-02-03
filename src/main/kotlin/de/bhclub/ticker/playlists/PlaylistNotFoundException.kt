@@ -1,7 +1,3 @@
-package de.bhclub.ticker.playlists;
+package de.bhclub.ticker.playlists
 
-public class PlaylistNotFoundException extends RuntimeException {
-    public PlaylistNotFoundException(String message) {
-        super(message);
-    }
-}
+class PlaylistNotFoundException(message: String?) : RuntimeException(message)

@@ -1,66 +1,58 @@
-package de.bhclub.ticker.preferences;
+package de.bhclub.ticker.preferences
 
-import de.bhclub.ticker.ticker.TickerService;
-import org.apache.logging.log4j.util.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import de.bhclub.ticker.ticker.TickerService.CommandList
+import org.apache.logging.log4j.util.Strings
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
 @Service
-public class PreferencesService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreferencesService.class);
-
-    public static final String LAST_COMMAND = "last_command";
-
-    @Autowired
-    private PreferencesRepository preferencesRepository;
-
-    public void setBrightness(int brightness) {
-        PreferencesEntity entity = new PreferencesEntity();
-        entity.setId("brightness");
-        entity.setValue(String.valueOf(brightness));
-        preferencesRepository.save(entity);
+class PreferencesService(
+    private val preferencesRepository: PreferencesRepository,
+) {
+    fun getBrightness(): Int {
+        val entity = preferencesRepository.findById("brightness")
+        return entity.map { it.value.toInt() }
+            .orElse(100)
     }
 
-    public int getBrightness() {
-        Optional<PreferencesEntity> entity = preferencesRepository.findById("brightness");
-
-        return entity.map(e -> Integer.valueOf(e.getValue())).orElse(100);
+    fun setBrightness(brightness: Int) {
+        val entity = PreferencesEntity(
+            id = "brightness",
+            value = brightness.toString()
+        )
+        preferencesRepository.save(entity)
     }
 
-    public void setLastCommand(List<String> commandList) {
-        if (commandList == null) {
-            preferencesRepository.deleteById(LAST_COMMAND);
-        }
-        PreferencesEntity entity = new PreferencesEntity();
-        entity.setId(LAST_COMMAND);
-        String value = Strings.join(commandList, ' ');
-        entity.setValue(value);
-        preferencesRepository.save(entity);
-        LOGGER.info("Save last program {}", value);
-    }
-
-    public TickerService.CommandList getLastCommand() {
-        TickerService.CommandList commands = new TickerService.CommandList();
-        Optional<PreferencesEntity> entity = preferencesRepository.findById(LAST_COMMAND);
-
-        if (entity.isPresent()) {
-            String commandList = entity.get().getValue();
-            LOGGER.info("Found last program: {}", commandList);
+    fun getLastCommand(): CommandList {
+        val commands = CommandList()
+        val entity = preferencesRepository.findById(LAST_COMMAND)
+        if (entity.isPresent) {
+            val commandList: String = entity.get().value
+            LOGGER.info("Found last program: {}", commandList)
             if (!Strings.isBlank(commandList)) {
-                commands.addAll(Arrays.asList(commandList.split(" ")));
+                commands.addAll(listOf(*commandList.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()))
             }
-            LOGGER.info("commandList loaded: {}", commands);
+            LOGGER.info("commandList loaded: {}", commands)
         }
-
-        return commands;
+        return commands
     }
 
+    fun setLastCommand(commandList: List<String>?) {
+        if (commandList == null) {
+            preferencesRepository.deleteById(LAST_COMMAND)
+        }
+        val value = Strings.join(commandList, ' ')
+        val entity = PreferencesEntity(
+            id = LAST_COMMAND,
+            value = value
+        )
+        preferencesRepository.save(entity)
+        LOGGER.info("Save last program {}", value)
+    }
 
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(PreferencesService::class.java)
+        const val LAST_COMMAND = "last_command"
+    }
 }

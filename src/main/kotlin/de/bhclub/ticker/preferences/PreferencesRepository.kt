@@ -1,6 +1,5 @@
-package de.bhclub.ticker.preferences;
+package de.bhclub.ticker.preferences
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository
 
-public interface PreferencesRepository extends CrudRepository<PreferencesEntity, String> {
-}
+interface PreferencesRepository : CrudRepository<PreferencesEntity, String>

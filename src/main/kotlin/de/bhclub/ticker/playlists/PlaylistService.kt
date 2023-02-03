@@ -1,81 +1,61 @@
-package de.bhclub.ticker.playlists;
+package de.bhclub.ticker.playlists
 
-import de.bhclub.ticker.gif.Gif;
-import de.bhclub.ticker.gif.GifService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.security.InvalidParameterException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import de.bhclub.ticker.gif.Gif
+import de.bhclub.ticker.gif.GifService
+import org.springframework.stereotype.Service
+import java.security.InvalidParameterException
 
 @Service
-public class PlaylistService {
+class PlaylistService(
+    private val playlistRepository: PlaylistRepository,
+    private val gifService: GifService,
+) {
+    fun getPlayList() = playlistRepository.findAll()
 
-    @Autowired
-    private PlaylistRepository playlistRepository;
-
-    @Autowired
-    private GifService gifService;
-
-    public Iterable<Playlist> getPlaylists() {
-        return playlistRepository.findAll();
-    }
-
-    public Playlist getPlaylist(long playlistId) {
-        Optional<Playlist> entity = playlistRepository.findById(playlistId);
-        if (entity.isPresent()) {
-            return entity.get();
+    fun getPlaylist(playlistId: Long): Playlist {
+        val entity = playlistRepository.findById(playlistId)
+        if (entity.isPresent) {
+            return entity.get()
         }
-
-        throw new InvalidParameterException("playlist not found");
+        throw InvalidParameterException("playlist not found")
     }
 
-    public List<String> getImagePaths(Playlist entity) {
-        return entity.getEntries().stream()
-                .map(Gif::getId)
-                .map(id -> gifService.getFileRef(id))
-                .collect(Collectors.toList());
+    fun getImagePaths(entity: Playlist): List<String> {
+        return entity.entries
+            .map(Gif::id)
+            .mapNotNull { gifService.getFileRef(it) }
+            .toList()
     }
 
-
-    public void delete(long playlistId) {
-        playlistRepository.deleteById(playlistId);
+    fun delete(playlistId: Long) {
+        playlistRepository.deleteById(playlistId)
     }
 
-    public Playlist create(String name) {
-        Playlist playlist = new Playlist();
-        playlist.setName(name);
-
-        return playlistRepository.save(playlist);
+    fun create(name: String): Playlist {
+        val playlist = Playlist(
+            name = name,
+        )
+        return playlistRepository.save(playlist)
     }
 
-    public void toggleShuffle(long playlistId) {
-        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
-        playlist.ifPresentOrElse(
-                pl -> {
-                    pl.setShuffle(!pl.isShuffle());
-                    playlistRepository.save(pl);
-                },
-                () -> { throw new PlaylistNotFoundException("playlist not found"); }
-        );
+    fun toggleShuffle(playlistId: Long) {
+        val playlist = playlistRepository.findById(playlistId).orElse(null)
+            ?: throw PlaylistNotFoundException("playlist not found")
 
+        playlist.shuffle = !playlist.shuffle
+        playlistRepository.save(playlist)
     }
 
-    public void addGifToPlaylist(long gifId, long playlistId) {
-        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
-        playlist.ifPresentOrElse(pl -> {
-                    pl.getEntries().add(gifService.getGif(gifId));
-                    playlistRepository.save(pl);
-                },
-                () -> { throw new PlaylistNotFoundException("playlist not found"); }
-        );
+    fun addGifToPlaylist(gifId: Long, playlistId: Long) {
+        val playlist = playlistRepository.findById(playlistId).orElse(null)
+            ?: throw PlaylistNotFoundException("playlist not found")
 
-
+        gifService.getGif(gifId)?.let {
+            playlist.entries.add(it)
+            playlistRepository.save(playlist)
+        }
     }
 
-    public Iterable<Playlist> getAll() {
-        return playlistRepository.findAll();
-    }
+    val all: Iterable<Playlist?>
+        get() = playlistRepository.findAll()
 }

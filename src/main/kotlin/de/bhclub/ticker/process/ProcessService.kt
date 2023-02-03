@@ -1,7 +1,6 @@
-package de.bhclub.ticker.process;
+package de.bhclub.ticker.process
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service
 
 @Service
-public class ProcessService {
-}
+class ProcessService 

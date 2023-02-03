@@ -1,16 +1,9 @@
-package de.bhclub.ticker.ticker;
+package de.bhclub.ticker.ticker
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties
+import kotlin.properties.Delegates
 
 @ConfigurationProperties(prefix = "ticker.settings")
-public class TickerSettings {
-    private int brightness;
-
-    public int getBrightness() {
-        return brightness;
-    }
-
-    public void setBrightness(int brightness) {
-        this.brightness = brightness;
-    }
+class TickerSettings {
+    var brightness by Delegates.notNull<Int>()
 }

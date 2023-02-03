@@ -6,8 +6,8 @@ out/
 # building
 build/
 .gradle
-lombok.config
 
 # software
 data/
 gif/
+!src/**/gif

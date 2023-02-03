@@ -1,6 +1,5 @@
-package de.bhclub.ticker.playlists;
+package de.bhclub.ticker.playlists
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository
 
-public interface PlaylistRepository extends CrudRepository<Playlist, Long> {
-}
+interface PlaylistRepository : CrudRepository<Playlist, Long>

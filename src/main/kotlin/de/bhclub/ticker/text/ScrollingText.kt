@@ -1,28 +1,22 @@
-package de.bhclub.ticker.text;
+package de.bhclub.ticker.text
 
-import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.awt.Color;
+import java.awt.Color
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @Entity
-@Data
-public class ScrollingText {
-
+data class ScrollingText(
     @Id
     @GeneratedValue
-    private Long id;
-
-    private String text;
-    private Color textColor;
-    private Color outlineColor;
-    private Color background;
-    private String font;
-    private Integer spacing;
-    private Integer speed;
-    private Integer startX;
-    private Integer startY;
-
-}
+    val id: Long? = null,
+    val text: String,
+    val textColor: Color,
+    val outlineColor: Color,
+    val background: Color,
+    val font: String,
+    val spacing: Int,
+    val speed: Int,
+    val startX: Int? = null,
+    val startY: Int? = null,
+)
