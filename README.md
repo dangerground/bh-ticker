@@ -57,6 +57,11 @@ Run with root permissions to be able to kill the currently running output or to 
     * https://lemariva.com/blog/2018/07/raspberry-pi-preempt-rt-patching-tutorial-for-kernel-4-14-y
     * RPI Skripte mit unnice starten
     * mindestens eine CPU reservieren für RPI skripte
+  * Try:
+    * headless(https://raspberrypi-guide.github.io/getting-started/raspberry-pi-headless-setup) or
+    * other refresh rates https://github.com/hzeller/rpi-rgb-led-matrix/commit/307a05020531051b1f1c5c54be4e6b857c835ad3
+    * dietPi https://github.com/hzeller/rpi-rgb-led-matrix#all-raspberry-pi-versions-supported
+  * Native-Image
 
 ### Playing
   * einlassstopsignal abgreifen -> aktion triggern (z.B. andere sachen playen)
