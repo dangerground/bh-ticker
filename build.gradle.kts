@@ -1,6 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.8.10"
-    id("org.springframework.boot") version "2.7.8"
+    val kotlinVersion = "1.8.10"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
+    id("org.springframework.boot") version "3.0.2"
 }
 
 repositories {
@@ -8,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation(enforcedPlatform("org.springframework.boot:spring-boot-dependencies:2.7.8"))
+    implementation(enforcedPlatform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
 
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")

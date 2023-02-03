@@ -1,10 +1,10 @@
 package de.bhclub.ticker.playlists
 
 import de.bhclub.ticker.gif.Gif
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToMany
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToMany
 
 @Entity
 data class Playlist(
