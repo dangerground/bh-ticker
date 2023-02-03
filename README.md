@@ -4,6 +4,8 @@
 
 Run with root permissions to be able to kill the currently running output or to be able to replace it
 
+## You need an Adafruit RGB Matrix HAT with hardware mod according to https://github.com/hzeller/rpi-rgb-led-matrix.git
+
 ## Install Prerequisites
 
 - install raspian lite
@@ -19,6 +21,7 @@ Run with root permissions to be able to kill the currently running output or to 
   - make led-image-viewer
 - disable audio (because of hardware mod)
   - in /boot/config.txt set:  dtparam=audio=off
+  - sudo reboot
 
 ## "Install"
 - copy bh-ticker.jar to the pi
@@ -29,9 +32,10 @@ Run with root permissions to be able to kill the currently running output or to 
 - enable daily restart `sudo nano /etc/cron.d/reboot` and copy content from `cronjob` file
 - scrolling text
   - sudo apt install otf2bdf
-  - wget https://github.com/dharmatype/Bebas-Neue/raw/master/fonts/otf/BebasNeue-Regular.otf
+  - wget https://github.com/dharmatype/Bebas-Neue/raw/master/fonts/BebasNeue(2018)ByDhamraType/otf/BebasNeue-Regular.otf
   - mkdir fonts
   - otf2bdf -p 27 BebasNeue-Regular.otf > fonts/BebasNeue-Regular.bdf
+- mkdir gif
  
 ## TODO-List
   * install / update script .sh basteln
