@@ -2,19 +2,19 @@ package de.bhclub.ticker.ticker
 
 import de.bhclub.ticker.preferences.PreferencesService
 import de.bhclub.ticker.text.ScrollingText
+import mu.KLogging
 import org.apache.logging.log4j.util.Strings
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.awt.Color
 import java.io.File
-import java.util.logging.Logger
 
 @Service
 class TickerService(
     private val preferencesService: PreferencesService,
     @Value("\${ticker.tools}")
     private val rpiRgbLedMatrixHome: String,
-) {
+) : KLogging() {
     init {
         options.add(HAS_32_ROWS)
         options.add(HAS_64_COLS)
@@ -41,12 +41,12 @@ class TickerService(
 
     private fun startProgram(command: List<String>?) {
         if (command.isNullOrEmpty()) {
-            logger.warning("No command given to start")
+            logger.warn { "No command given to start" }
             return
         }
         preferencesService.setLastCommand(command)
         val debugInfo = "command list: >" + Strings.join(command, ' ') + "<"
-        logger.info(debugInfo)
+        logger.info { debugInfo }
         val builder = ProcessBuilder(command)
             .directory(File("/home/pi"))
             .inheritIO()
@@ -104,18 +104,18 @@ class TickerService(
     }
 
     fun killTicker() {
-        logger.info("trying to stop command $commandProcess")
+        logger.info { "trying to stop command $commandProcess" }
         if (commandProcess != null) {
             commandProcess?.let { kill(it.toHandle()) }
-            logger.info("killed everything, now waiting $commandProcess")
+            logger.info { "killed everything, now waiting $commandProcess" }
             commandProcess?.waitFor()
             commandProcess = null
-            logger.info("command should have stopped")
+            logger.info { "command should have stopped" }
         }
     }
 
     private fun kill(handle: ProcessHandle) {
-        logger.info("kill handle $handle")
+        logger.info { "kill handle $handle" }
         handle.descendants().forEach { kill(it) }
         handle.destroyForcibly()
     }
@@ -133,7 +133,6 @@ class TickerService(
     }
 
     companion object {
-        private val logger = Logger.getLogger(TickerService::class.java.name)
         private const val LOOP_FOREVER_PARAMETER = "-f"
         private const val SHUFFLE_PARAMETER = "-s"
         private val options: MutableCollection<String> = mutableListOf()

@@ -17,6 +17,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
+    // logging
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+
     // database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.hsqldb:hsqldb")
