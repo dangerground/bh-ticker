@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 User=pi
-ExecStart=/usr/bin/sudo /usr/bin/env java -jar /home/pi/bh-ticker.jar
+ExecStart=/usr/bin/sudo /usr/bin/env java -XX:+UseZGC -jar /home/pi/bh-ticker.jar
 
 [Install]
 WantedBy=multi-user.target

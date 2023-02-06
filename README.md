@@ -12,7 +12,7 @@ Run with root permissions to be able to kill the currently running output or to 
 - configure wifi and setup ssh to start on boot (e.g. via raspi-config)
 - install software
   - sudo apt update
-  - sudo apt install -y --force-yes git openjdk-9-jre python2.7-dev python-pil python3-dev libgraphicsmagick++-dev libwebp-dev
+  - sudo apt install -y --force-yes git openjdk-17-jre-headless python2.7-dev python-pil python3-dev libgraphicsmagick++-dev libwebp-dev
   - git clone https://github.com/hzeller/rpi-rgb-led-matrix.git
   - cd rpi-rgb-led-matrix
   - make
@@ -41,7 +41,6 @@ Run with root permissions to be able to kill the currently running output or to 
   * install / update script .sh basteln
   * start-skript bauen
     * nice command
-    * GC umstellen auf weniger blocking
   * LED Slowdown konfigurierbar machen
   * Einträge kopierbar (damit quasi bearbeitbar)
   * neue Einträge via Modal-Fenster hinzufügen können
