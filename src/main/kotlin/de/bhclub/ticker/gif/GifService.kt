@@ -8,6 +8,7 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
+import java.util.UUID
 
 @Service
 class GifService(
@@ -19,8 +20,8 @@ class GifService(
 
     fun getAllGifs() = gifRepository.findAll()
 
-    fun getFile(fileId: Long): ByteArray? {
-        return gifRepository.findById(fileId).map(Gif::data).orElse(null)
+    fun getFile(fileId: UUID): Gif? {
+        return gifRepository.findById(fileId).get()
     }
 
     fun uploadFile(file: MultipartFile): Gif {
@@ -56,7 +57,7 @@ class GifService(
     val activeGif: String
         get() = "wave.gif"
 
-    fun getFileRef(fileId: Long): String? {
+    fun getFileRef(fileId: UUID): String? {
 //        try {
         val gif = gifRepository.findById(fileId)
         //File file = File.createTempFile("gif", gif.get().getName());
@@ -69,7 +70,7 @@ class GifService(
 //        }
     }
 
-    fun getGif(gifId: Long): Gif? {
+    fun getGif(gifId: UUID): Gif? {
         val gif = gifRepository.findById(gifId)
         return gif.orElseGet { null }
     }

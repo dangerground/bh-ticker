@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import java.util.UUID
 
 @Controller
 @RequestMapping("/text")
@@ -44,13 +45,13 @@ class ScrollingTextController(
     }
 
     @GetMapping("/play/{id}")
-    fun playText(@PathVariable("id") id: Long): String {
+    fun playText(@PathVariable id: UUID): String {
         tickerService.playText(scrollingTextService.getText(id))
         return "redirect:/text/list"
     }
 
     @GetMapping("/delete/{id}")
-    fun deleteText(@PathVariable("id") id: Long): String {
+    fun deleteText(@PathVariable id: UUID): String {
         scrollingTextService.deleteText(id)
         return "redirect:/text/list"
     }

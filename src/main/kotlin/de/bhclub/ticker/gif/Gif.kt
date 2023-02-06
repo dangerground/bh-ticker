@@ -3,15 +3,14 @@ package de.bhclub.ticker.gif
 import de.bhclub.ticker.playlists.Playlist
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToMany
+import java.util.UUID
 
 @Entity
 data class Gif(
     @Id
-    @GeneratedValue
-    val id: Long = 0,
+    val id: UUID = UUID.randomUUID(),
     val name: String?,
     val path: String,
 

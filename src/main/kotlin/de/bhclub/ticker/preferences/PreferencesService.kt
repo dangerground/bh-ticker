@@ -17,7 +17,7 @@ class PreferencesService(
 
     fun setBrightness(brightness: Int) {
         val entity = PreferencesEntity(
-            id = "brightness",
+            key = "brightness",
             value = brightness.toString()
         )
         preferencesRepository.save(entity)
@@ -44,7 +44,7 @@ class PreferencesService(
         }
         val value = Strings.join(commandList, ' ')
         val entity = PreferencesEntity(
-            id = LAST_COMMAND,
+            key = LAST_COMMAND,
             value = value
         )
         preferencesRepository.save(entity)

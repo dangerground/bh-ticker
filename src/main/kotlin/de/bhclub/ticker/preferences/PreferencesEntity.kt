@@ -7,7 +7,7 @@ import jakarta.persistence.Id
 @Entity
 data class PreferencesEntity(
     @Id
-    val id: String,
+    val key: String,
 
     @Column(length = 2000)
     val value: String,

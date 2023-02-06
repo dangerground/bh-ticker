@@ -4,15 +4,14 @@ import de.bhclub.ticker.gif.Gif
 import de.bhclub.ticker.gif.GifService
 import org.springframework.stereotype.Service
 import java.security.InvalidParameterException
+import java.util.UUID
 
 @Service
 class PlaylistService(
     private val playlistRepository: PlaylistRepository,
     private val gifService: GifService,
 ) {
-    fun getPlayList() = playlistRepository.findAll()
-
-    fun getPlaylist(playlistId: Long): Playlist {
+    fun getPlaylist(playlistId: UUID): Playlist {
         val entity = playlistRepository.findById(playlistId)
         if (entity.isPresent) {
             return entity.get()
@@ -27,7 +26,7 @@ class PlaylistService(
             .toList()
     }
 
-    fun delete(playlistId: Long) {
+    fun delete(playlistId: UUID) {
         playlistRepository.deleteById(playlistId)
     }
 
@@ -38,7 +37,7 @@ class PlaylistService(
         return playlistRepository.save(playlist)
     }
 
-    fun toggleShuffle(playlistId: Long) {
+    fun toggleShuffle(playlistId: UUID) {
         val playlist = playlistRepository.findById(playlistId).orElse(null)
             ?: throw PlaylistNotFoundException("playlist not found")
 
@@ -46,7 +45,7 @@ class PlaylistService(
         playlistRepository.save(playlist)
     }
 
-    fun addGifToPlaylist(gifId: Long, playlistId: Long) {
+    fun addGifToPlaylist(gifId: UUID, playlistId: UUID) {
         val playlist = playlistRepository.findById(playlistId).orElse(null)
             ?: throw PlaylistNotFoundException("playlist not found")
 
@@ -56,6 +55,5 @@ class PlaylistService(
         }
     }
 
-    val all: Iterable<Playlist?>
-        get() = playlistRepository.findAll()
+    fun getAll() = playlistRepository.findAll()
 }

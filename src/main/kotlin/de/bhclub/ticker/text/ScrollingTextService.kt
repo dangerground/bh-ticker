@@ -3,6 +3,7 @@ package de.bhclub.ticker.text
 import de.bhclub.ticker.playlists.PlaylistNotFoundException
 import org.springframework.stereotype.Service
 import java.awt.Color
+import java.util.UUID
 
 @Service
 class ScrollingTextService(
@@ -31,7 +32,7 @@ class ScrollingTextService(
 
     fun getAll() = scrollingTextRepository.findAll()
 
-    fun getText(id: Long): ScrollingText {
+    fun getText(id: UUID): ScrollingText {
         val text = scrollingTextRepository.findById(id)
         if (!text.isPresent) {
             throw PlaylistNotFoundException("text not found")
@@ -39,7 +40,7 @@ class ScrollingTextService(
         return text.get()
     }
 
-    fun deleteText(id: Long) {
+    fun deleteText(id: UUID) {
         scrollingTextRepository.deleteById(id)
     }
 

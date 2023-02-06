@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.MediaType
+import java.util.UUID
 
 @Controller
-@RequestMapping("/gif/*")
+@RequestMapping("/gif")
 class GifController(
     private val gifService: GifService,
     private val tickerService: TickerService
@@ -37,14 +39,16 @@ class GifController(
         return "gif_upload"
     }
 
-    @GetMapping("/show/{fileId:[0-9]+}")
+    @GetMapping("/show/{fileId}")
     @ResponseBody
-    fun showGifs(@PathVariable fileId: Long): ByteArray? {
-        return gifService.getFile(fileId)
+    fun showGifs(response: HttpServletResponse, @PathVariable fileId: UUID): ByteArray? {
+        val gif = gifService.getFile(fileId) ?: return null
+
+        return gif.data
     }
 
-    @GetMapping("/play/{fileId:[0-9]+}")
-    fun playGif(@PathVariable fileId: Long): String {
+    @GetMapping("/play/{fileId}")
+    fun playGif(@PathVariable fileId: UUID): String {
         val filePath = gifService.getFileRef(fileId)
         tickerService.playGif(filePath)
         return "redirect:/gif/manage"

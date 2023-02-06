@@ -3,7 +3,6 @@ package de.bhclub.ticker.playlists
 import de.bhclub.ticker.gif.Gif
 import de.bhclub.ticker.gif.GifService
 import de.bhclub.ticker.ticker.TickerService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import java.io.IOException
+import java.util.UUID
 
 @Controller
 @RequestMapping("/playlists")
@@ -22,12 +21,12 @@ class PlaylistController(
 ) {
     @GetMapping("overview")
     fun playlists(model: Model): String {
-        model.addAttribute("playlists", playlistService.all)
+        model.addAttribute("playlists", playlistService.getAll())
         return "playlists"
     }
 
-    @GetMapping("/view/{playlistId:[0-9]+}")
-    fun view(model: Model, @PathVariable("playlistId") playlistId: Long): String {
+    @GetMapping("/view/{playlistId}")
+    fun view(model: Model, @PathVariable playlistId: UUID): String {
         val pl = playlistService.getPlaylist(playlistId)
         model.addAttribute("playlist", pl)
         val gifs: MutableCollection<Gif?> = ArrayList()
@@ -48,28 +47,28 @@ class PlaylistController(
 
     @PostMapping("/add")
     fun add(
-        @RequestParam gifId: Long,
-        @RequestParam playlistId: Long
+        @RequestParam gifId: UUID,
+        @RequestParam playlistId: UUID
     ): String {
         playlistService.addGifToPlaylist(gifId, playlistId)
         return "redirect:/playlists/view/$playlistId"
     }
 
-    @GetMapping("/shufflemode/{playlistId:[0-9]+}")
-    fun shufflemode(@PathVariable playlistId: Long): String {
+    @GetMapping("/shufflemode/{playlistId}")
+    fun shufflemode(@PathVariable playlistId: UUID): String {
         playlistService.toggleShuffle(playlistId)
         return "redirect:/playlists/view/$playlistId"
     }
 
-    @GetMapping("/play/{playlistId:[0-9]+}")
-    fun play(@PathVariable("playlistId") playlistId: Long): String {
+    @GetMapping("/play/{playlistId}")
+    fun play(@PathVariable playlistId: UUID): String {
         val entity = playlistService.getPlaylist(playlistId)
         tickerService.playPlaylist(playlistService.getImagePaths(entity), entity.shuffle)
         return "redirect:/"
     }
 
-    @GetMapping("/delete/{playlistId:[0-9]+}")
-    fun delete(@PathVariable("playlistId") playlistId: Long): String {
+    @GetMapping("/delete/{playlistId}")
+    fun delete(@PathVariable("playlistId") playlistId: UUID): String {
         playlistService.delete(playlistId)
         return "redirect:/playlists/overview"
     }

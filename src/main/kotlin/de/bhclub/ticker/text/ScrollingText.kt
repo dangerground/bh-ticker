@@ -2,14 +2,13 @@ package de.bhclub.ticker.text
 
 import java.awt.Color
 import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import java.util.UUID
 
 @Entity
 data class ScrollingText(
     @Id
-    @GeneratedValue
-    val id: Long? = null,
+    val id: UUID = UUID.randomUUID(),
     val text: String,
     val textColor: Color,
     val outlineColor: Color,

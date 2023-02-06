@@ -21,7 +21,7 @@ class PreferencesController(
     }
 
     @PostMapping("/preferences/save")
-    fun savePreferences(@RequestParam("brightness") brightness: Int): String {
+    fun savePreferences(@RequestParam brightness: Int): String {
         preferencesService.setBrightness(brightness)
         tickerService.restartTicker()
         return "redirect:/preferences"
