@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.MediaType
 import java.util.UUID
 
 @Controller
@@ -21,22 +20,23 @@ class GifController(
     private val tickerService: TickerService
 ) {
     @GetMapping("/manage")
-    fun showGifs(model: Model): String {
+    fun showGifs(
+        model: Model,
+        @RequestParam gifId: UUID?,
+        ): String {
         model.addAttribute("gifs", gifService.getAllGifs())
         model.addAttribute("selected", gifService.activeGif)
-        return "gifs"
-    }
 
-    @GetMapping("/upload")
-    fun showUpload(): String {
-        return "gif_upload"
+        if (gifId != null) {
+            model.addAttribute("gif", gifService.getGif(gifId))
+        }
+        return "gifs"
     }
 
     @PostMapping("/upload")
     fun doUpload(@RequestParam file: MultipartFile, model: Model): String {
         val gif = gifService.uploadFile(file)
-        model.addAttribute("gif", gif)
-        return "gif_upload"
+        return "redirect:/gif/manage?gifId=${gif.id}"
     }
 
     @GetMapping("/show/{fileId}")

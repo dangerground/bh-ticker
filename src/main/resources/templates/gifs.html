@@ -5,7 +5,21 @@
 <div th:replace="fragments/navigation.html :: navbar"></div>
 
 <div class="container">
-    <h1>Verfügbare Bilder</h1>
+    <h1>Verfügbare Bilder
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+            +
+        </button>
+    </h1>
+    <div th:replace="fragments/gif_modal.html :: upload"></div>
+
+    <div th:if="${gif}">
+        <p th:text="'Das GIF >>' + ${gif.name} + '<< wurde hochgeladen, direkt abspielen?'"></p>
+
+        <img th:src="@{/gif/show/{name}(name=${gif.id})}" height="32" width="192" />
+        <br/>
+        <br/>
+        <a th:href="@{/gif/play/{name}(name=${gif.id})}">Play on ticker</a>
+    </div>
 
     <table class="table">
         <thead>
