@@ -33,3 +33,9 @@ kotlin {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
+
+tasks {
+    bootRun {
+        args = listOf("--spring.profiles.active=local")
+    }
+}

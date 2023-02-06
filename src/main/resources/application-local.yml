@@ -1,0 +1,9 @@
+---
+spring:
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    # change load path to resource folder instead of /target
+    prefix: file:src/main/resources/templates/
+
