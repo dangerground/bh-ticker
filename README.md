@@ -47,7 +47,6 @@ Run with root permissions to be able to kill the currently running output or to 
   * neue Einträge via Modal-Fenster hinzufügen können
   * Playlist zwischen Text und Image kombinierbar machen
   * Bilder mit korrektem mimetype ausliefern
-  * Datenbankmigrationsskript
   * Auf Startseite anzeigen, was gerade läuft
   * Uhrzeit im Scrolltext anzeigen können
   * Playlist Einträge verschiebbar

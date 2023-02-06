@@ -22,6 +22,7 @@ dependencies {
 
     // database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("org.flywaydb:flyway-core")
     runtimeOnly("org.hsqldb:hsqldb")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")

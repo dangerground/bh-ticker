@@ -6,10 +6,10 @@ ticker:
 
 spring:
   datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
     url: jdbc:hsqldb:file:data/mydb
     username: SA
     password: lEtmEIn
-    driver-class-name: org.hsqldb.jdbc.JDBCDriver
-
-spring.datasource.initialization-mode: always
-spring.jpa.hibernate.ddl-auto: update
+    initializationMode: always
+  flyway:
+    enabled: true
