@@ -43,7 +43,6 @@ Run with root permissions to be able to kill the currently running output or to 
     * nice command
   * LED Slowdown konfigurierbar machen
   * Einträge kopierbar (damit quasi bearbeitbar)
-  * neue Einträge via Modal-Fenster hinzufügen können
   * Playlist zwischen Text und Image kombinierbar machen
   * Bilder mit korrektem mimetype ausliefern
   * Auf Startseite anzeigen, was gerade läuft

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="text" class="modal fade" id="textModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/text/create}" method="POST" role="form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Neue Laufschrift</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="text" class="col-sm-2 col-form-label">Text</label>
+                            <input type="text" class="col-sm-10" id="text" name="text" required placeholder="text"/>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="color" class="col-sm-6 col-form-label">Textfarbe</label>
+                            <input class="col-sm-6" title="text-color" type="color" id="color" name="color"
+                                   value="#ffffff"/>
+                        </div>
+
+                        <div class="row">
+                            <label for="outline" class="col-sm-6 col-form-label">Umrandung</label>
+                            <input class="col-sm-6" title="text-outline" type="color" id="outline" name="outline"
+                                   value="#cccccc"/>
+                        </div>
+
+                        <div class="row">
+                            <label for="background" class="col-sm-6 col-form-label">Hintergrund</label>
+                            <input class="col-sm-6" title="background color" type="color" id="background"
+                                   name="background"
+                                   value="#000000"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="space" class="col-sm-6 col-form-label">Buchstabenabstand</label>
+                            <input class="col-sm-6" title="spacing" type="range" min="1" max="10" id="space"
+                                   name="spacing" value="2">
+                        </div>
+
+                        <div class="row">
+                            <label for="speed" class="col-sm-6 col-form-label">Geschwindigkeit</label>
+                            <input class="col-sm-6" title="speed" type="range" min="1" max="10" id="speed"
+                                   name="speed" value="3">
+                        </div>
+
+                        <div class="row">
+                            <label for="font" class="col-sm-6 col-form-label"></label>
+                            <select class="col-sm-6" title="text-font" id="font" name="font" style="display: none;">
+                                <option selected>BebasNeue-Regular</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">Anlegen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</html>
