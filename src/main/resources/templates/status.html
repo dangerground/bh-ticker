@@ -5,10 +5,10 @@
 <div th:replace="fragments/navigation.html :: navbar"></div>
 
 <div class="container">
-    <h1>Status</h1>
+    <h1>Aktuell</h1>
 
-    <a th:if="${isPlaying}" th:href="@{/kill}">playing, stop</a>
-    <p th:if="!${isPlaying}">*Thumbleweeds*</p>
+    <a th:if="${isPlaying}" th:href="@{/kill}">läuft etwas, jetzt stoppen</a>
+    <p th:if="!${isPlaying}">*Läuft nichts*</p>
 </div>
 <div th:replace="fragments/footer.html :: footer"></div>
 
